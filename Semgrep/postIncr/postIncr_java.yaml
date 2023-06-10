@@ -1,0 +1,7 @@
+rules:
+- id: postIncrJava
+  languages:
+    - java
+  message: Testing for PostIncrement Operator in Java
+  pattern: $X ++
+  severity: INFO

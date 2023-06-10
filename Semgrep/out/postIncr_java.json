@@ -1,0 +1,50 @@
+{
+    "errors": [],
+    "paths": {
+        "_comment": "<add --verbose for a list of skipped paths>",
+        "scanned": [
+            "test5.java"
+        ]
+    },
+    "results": [
+        {
+            "check_id": "Semgrep.postIncr.postIncrJava",
+            "end": {
+                "col": 16,
+                "line": 8,
+                "offset": 154
+            },
+            "extra": {
+                "engine_kind": "OSS",
+                "fingerprint": "159bd262120de3d035e2fa5577d914d1edf86774ecf79f8de225bbd429f1793a27b59d28a2b0851e1d31565b40bef2ca856414a7ff9cb0f20cafd7ab81f31e6c_0",
+                "is_ignored": false,
+                "lines": "            i++;",
+                "message": "Testing for PostIncrement Operator in Java",
+                "metadata": {},
+                "metavars": {
+                    "$X": {
+                        "abstract_content": "i",
+                        "end": {
+                            "col": 14,
+                            "line": 8,
+                            "offset": 152
+                        },
+                        "start": {
+                            "col": 13,
+                            "line": 8,
+                            "offset": 151
+                        }
+                    }
+                },
+                "severity": "INFO"
+            },
+            "path": "test5.java",
+            "start": {
+                "col": 13,
+                "line": 8,
+                "offset": 151
+            }
+        }
+    ],
+    "version": "1.25.0"
+}
