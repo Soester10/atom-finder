@@ -1,0 +1,50 @@
+{
+    "errors": [],
+    "paths": {
+        "_comment": "<add --verbose for a list of skipped paths>",
+        "scanned": [
+            "test4.js"
+        ]
+    },
+    "results": [
+        {
+            "check_id": "semgrep.postIncrJS",
+            "end": {
+                "col": 8,
+                "line": 4,
+                "offset": 58
+            },
+            "extra": {
+                "engine_kind": "OSS",
+                "fingerprint": "12a25cb73601f6200fa315b92a63dc576eb45bf5a8e5f30e6811b13f81fee2235124905697b4fd8914237a932508881c9292e9f5d22d3174b1f290ebb966f41d_0",
+                "is_ignored": false,
+                "lines": "    i++;",
+                "message": "Testing for PostIncrement Operator in JS",
+                "metadata": {},
+                "metavars": {
+                    "$X": {
+                        "abstract_content": "i",
+                        "end": {
+                            "col": 6,
+                            "line": 4,
+                            "offset": 56
+                        },
+                        "start": {
+                            "col": 5,
+                            "line": 4,
+                            "offset": 55
+                        }
+                    }
+                },
+                "severity": "INFO"
+            },
+            "path": "test4.js",
+            "start": {
+                "col": 5,
+                "line": 4,
+                "offset": 55
+            }
+        }
+    ],
+    "version": "1.25.0"
+}

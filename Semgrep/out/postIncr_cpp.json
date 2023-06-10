@@ -1,0 +1,50 @@
+{
+    "errors": [],
+    "paths": {
+        "_comment": "<add --verbose for a list of skipped paths>",
+        "scanned": [
+            "test1.cpp"
+        ]
+    },
+    "results": [
+        {
+            "check_id": "semgrep.postIncrCPP",
+            "end": {
+                "col": 12,
+                "line": 10,
+                "offset": 127
+            },
+            "extra": {
+                "engine_kind": "OSS",
+                "fingerprint": "32a9d1c199654ce7d9f2f82720b99d6554d7d76b189c53580a081626b166179681b1127bdb48bb5a5b5928fc93600cf707fc6f585815fb6a0ae9da0107d64fbd_0",
+                "is_ignored": false,
+                "lines": "        i++;",
+                "message": "Testing for PostIncrement Operator in CPP",
+                "metadata": {},
+                "metavars": {
+                    "$X": {
+                        "abstract_content": "i",
+                        "end": {
+                            "col": 10,
+                            "line": 10,
+                            "offset": 125
+                        },
+                        "start": {
+                            "col": 9,
+                            "line": 10,
+                            "offset": 124
+                        }
+                    }
+                },
+                "severity": "INFO"
+            },
+            "path": "test1.cpp",
+            "start": {
+                "col": 9,
+                "line": 10,
+                "offset": 124
+            }
+        }
+    ],
+    "version": "1.25.0"
+}

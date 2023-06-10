@@ -1,0 +1,7 @@
+rules:
+- id: postIncrCPP
+  languages:
+    - cpp
+  message: Testing for PostIncrement Operator in CPP
+  pattern: $X ++
+  severity: INFO

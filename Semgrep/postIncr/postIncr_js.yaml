@@ -1,0 +1,7 @@
+rules:
+- id: postIncrJS
+  languages:
+    - js
+  message: Testing for PostIncrement Operator in JS
+  pattern: $X ++
+  severity: INFO
