@@ -3,12 +3,14 @@ import os
 #CODEQL
 def codeql():
     project_directory: str = "."
-    db_location: str = os.path.join(project_directory, "CodeQL/db/postIncr-cpp-database2")
+    db_location: str = os.path.join(project_directory, "CodeQL/db/postIncr-example-database")
+    multiple_languages: bool = False
     language: str = "cpp"
     main_file: str = os.path.join(project_directory, "examples/test1.cpp")
-    output_location: str = os.path.join(project_directory, "CodeQL/out/postIncr_cpp2.csv")
+    output_location: str = os.path.join(project_directory, "CodeQL/out/postIncr_example.csv")
     query_file_location: str = "CodeQL/postIncr/cpp/postIncr_cpp.ql"
 
+    db_cluster: str = " --db-cluster" if multiple_languages else ""
     build_commands: dict = {'cpp': 'g++', 'java': 'javac'}
     main_file_name: str = os.path.split(main_file)[1]
     extension: str = main_file_name.split(".")[-1]
@@ -16,13 +18,16 @@ def codeql():
     if extension in build_commands:
         command = build_commands[extension] + " " + main_file
         command = f' --command="{command}"'
+    
+    # command = "make"
+    # command = f' --command="{command}"'
 
 
     ##change into project directory
     os.system(f"cd {project_directory}")
 
     ## create db
-    os.system(f"codeql database create {db_location} --language={language}" + command)
+    os.system(f"codeql database create {db_location}{db_cluster} --language={language}" + command)
 
     ## install ql packs
     ###TODO
@@ -47,5 +52,5 @@ def semgrep():
 
 
 if __name__ == "__main__":
-    codeql()
+    # codeql()
     semgrep()

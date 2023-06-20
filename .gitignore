@@ -163,3 +163,11 @@ cython_debug/
 #MAC
 .DS_Store
 .git
+
+
+#Clojure data
+Clojure/
+
+# DB
+CodeQL/db/*
+db

@@ -1,7 +1,9 @@
 rules:
 - id: postIncrCPP
   languages:
-    - cpp
+    - c
   message: Testing for PostIncrement Operator in CPP
-  pattern: $X ++
+  # pattern: (*$Y) ++
+  pattern: (...)$Y ++(...)
+  # pattern-regex: (.+)++
   severity: INFO

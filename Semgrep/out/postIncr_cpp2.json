@@ -1,0 +1,63 @@
+{
+    "errors": [],
+    "paths": {
+        "_comment": "<add --verbose for a list of skipped paths>",
+        "scanned": [
+            "examples/test1.cpp"
+        ]
+    },
+    "results": [
+        {
+            "check_id": "Semgrep.postIncr.postIncrCPP",
+            "end": {
+                "col": 16,
+                "line": 11,
+                "offset": 146
+            },
+            "extra": {
+                "engine_kind": "OSS",
+                "fingerprint": "f6afd83b2bd37338bd13b193d03cfb6915c1456e5e9f2a7404bb584a794123138145b94c272aecb39099d84e804fa988255f8525666f35a4bb20eb96cc61a762_0",
+                "is_ignored": false,
+                "lines": "        i = i++;",
+                "message": "Testing for PostIncrement Operator in CPP",
+                "metadata": {},
+                "metavars": {
+                    "$X": {
+                        "abstract_content": "i",
+                        "end": {
+                            "col": 10,
+                            "line": 11,
+                            "offset": 140
+                        },
+                        "start": {
+                            "col": 9,
+                            "line": 11,
+                            "offset": 139
+                        }
+                    },
+                    "$Y": {
+                        "abstract_content": "i",
+                        "end": {
+                            "col": 14,
+                            "line": 11,
+                            "offset": 144
+                        },
+                        "start": {
+                            "col": 13,
+                            "line": 11,
+                            "offset": 143
+                        }
+                    }
+                },
+                "severity": "INFO"
+            },
+            "path": "examples/test1.cpp",
+            "start": {
+                "col": 9,
+                "line": 11,
+                "offset": 139
+            }
+        }
+    ],
+    "version": "1.25.0"
+}
