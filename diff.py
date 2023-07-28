@@ -3,7 +3,12 @@ import pandas as pd
 ##Clojure
 clj_df = pd.read_csv("Clojure/all_atoms.csv")
 
-clj_postfix_git = clj_df.loc[clj_df['atom'] == ':post-increment', ['file', 'line']]
+## postIncrement
+# clj_postfix_git = clj_df.loc[clj_df['atom'] == ':post-increment', ['file', 'line']]
+
+## implicitPredicate
+clj_postfix_git = clj_df.loc[clj_df['atom'] == ':implicit-predicate', ['file', 'line']]
+
 clj_postfix_git = clj_postfix_git.loc[clj_postfix_git['file'].str.startswith('git/', na=False)]
 
 # clj_postfix_git_map = clj_postfix_git.set_index('file').to_dict()['line']
@@ -16,7 +21,8 @@ clj_postfix_git_map = set(clj_postfix_git_map)
 ##CodeQL
 # codeql_df = pd.read_csv("CodeQL/out/postfix_atoms_gitNotLatest.csv", header=None)
 # codeql_df = pd.read_csv("CodeQL/out/postfix_git_final.csv", header=None)
-codeql_df = pd.read_csv("CodeQL/out/postfix_cpp_try4.csv", header=None)
+# codeql_df = pd.read_csv("CodeQL/out/postfix_cpp_try4.csv", header=None)
+codeql_df = pd.read_csv("CodeQL/out/implicitPredicate_git3.csv", header=None)
 ## col4 => file; col5 => line
 codeql_df[4] = 'git' + codeql_df[4].astype(str)
 
