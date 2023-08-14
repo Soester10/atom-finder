@@ -20,8 +20,9 @@ predicate testy_unary(UnaryOperation e) {
 
 predicate testy(BinaryOperation e) {
     not(e instanceof ComparisonOperation) and
-    instancy(e.getLeftOperand()) and
-    instancy(e.getRightOperand())
+    (not(e instanceof BinaryLogicalOperation or e instanceof BinaryBitwiseOperation) or 
+     instancy(e.getLeftOperand()) and
+     instancy(e.getRightOperand()))
 }
 
 

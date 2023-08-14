@@ -1,4 +1,5 @@
 import pandas as pd
+import sys
 
 ##Clojure
 clj_df = pd.read_csv("Clojure/all_atoms.csv")
@@ -8,6 +9,9 @@ clj_df = pd.read_csv("Clojure/all_atoms.csv")
 
 ## implicitPredicate
 clj_postfix_git = clj_df.loc[clj_df['atom'] == ':implicit-predicate', ['file', 'line']]
+
+##assignmentAsValue
+# clj_postfix_git = clj_df.loc[clj_df['atom'] == ':assignment-as-value', ['file', 'line']]
 
 clj_postfix_git = clj_postfix_git.loc[clj_postfix_git['file'].str.startswith('git/', na=False)]
 
@@ -22,13 +26,23 @@ clj_postfix_git_map = set(clj_postfix_git_map)
 # codeql_df = pd.read_csv("CodeQL/out/postfix_atoms_gitNotLatest.csv", header=None)
 # codeql_df = pd.read_csv("CodeQL/out/postfix_git_final.csv", header=None)
 # codeql_df = pd.read_csv("CodeQL/out/postfix_cpp_try4.csv", header=None)
-codeql_df = pd.read_csv("CodeQL/out/implicitPredicate_git3.csv", header=None)
+
+
+## implicitPredicate
+codeql_df = pd.read_csv("CodeQL/out/implicitPredicate_git.csv", header=None)
+
+##assignmentAsValue
+# codeql_df = pd.read_csv("CodeQL/out/assignmentAsValue_git.csv", header=None)
+
 ## col4 => file; col5 => line
 codeql_df[4] = 'git' + codeql_df[4].astype(str)
 
 # codeql_postfix_git_map = codeql_df.set_index(4).to_dict()[5]
 codeql_postfix_git_map = codeql_df[4].astype(str) + " : " + codeql_df[5].astype(str)
 codeql_postfix_git_map = set(codeql_postfix_git_map)
+
+# print(codeql_postfix_git_map)
+# sys.exit(0)
 
 
 codeql_compiled_files_df = pd.read_csv("CodeQL/out/compiled_files_git.csv")
@@ -59,7 +73,7 @@ if __name__ == "__main__":
 
     print(diff_clj_codeql)
     print()
-    print(diff_codeql_clj)
+    # print(diff_codeql_clj)
 
     # print(clj_postfix_git_map)
     # print()
