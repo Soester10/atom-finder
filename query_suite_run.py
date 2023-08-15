@@ -5,7 +5,7 @@ import pandas as pd
 def combine_csv(atom_name: str):
     main_df = None
     for file in os.listdir(f"CodeQL/{atom_name}/cpp/queries"):
-        os.system(f"codeql database analyze CodeQL/db/postIncr-gitNotLatest-database --format=csv --output=CodeQL/out/{atom_name}_git_{file.split('.')[0]}.csv CodeQL/{atom_name}/cpp/queries/{file} --rerun")
+        os.system(f"codeql database analyze CodeQL/db/postIncr-gitNotLatest-database --format=csv --output=CodeQL/out/{atom_name}_git_{file.split('.')[0]}.csv CodeQL/classifiers/{atom_name}/cpp/queries/{file} --rerun")
 
         # if main_df.all() == None:
         if type(main_df)() is None:

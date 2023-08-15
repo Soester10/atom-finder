@@ -5,8 +5,8 @@ import sys
 clj_df = pd.read_csv("Clojure/all_atoms.csv")
 
 ##Naming convention map
-atoms_naming_map = {"postfix_git_atoms": "post-increment", 
-                    "prefix_git_atoms": "pre-increment",
+atoms_naming_map = {"postfix": "post-increment", 
+                    "prefix": "pre-increment",
                     "implicitPredicate": "implicit-predicate",
                     "assignmentAsValue": "assignment-as-value",
                     "conditionalOperator": "conditional"}
