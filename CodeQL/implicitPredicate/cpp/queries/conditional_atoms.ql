@@ -30,5 +30,5 @@
  
  
  from ConditionalExpr e
-//  where (instancy(e.getCondition()))
+ where (instancy(e.getCondition()))
  select e, "This is an Implicit Predicate atom"
