@@ -4,7 +4,7 @@ import pandas as pd
 
 def combine_csv(atom_name: str):
     main_df = None
-    for file in os.listdir(f"CodeQL/{atom_name}/cpp/queries"):
+    for file in os.listdir(f"CodeQL/classifiers/{atom_name}/cpp/queries"):
         os.system(f"codeql database analyze CodeQL/db/postIncr-gitNotLatest-database --format=csv --output=CodeQL/out/{atom_name}_git_{file.split('.')[0]}.csv CodeQL/classifiers/{atom_name}/cpp/queries/{file} --rerun")
 
         # if main_df.all() == None:
@@ -23,6 +23,9 @@ def combine_csv(atom_name: str):
 if __name__ == "__main__":
     # combine_csv("assignmentAsValue")
     # combine_csv("implicitPredicate")
-    combine_csv("conditionalOperator")
+    # combine_csv("conditionalOperator")
+    # combine_csv("postIncr")
+    combine_csv("preIncr")
+
 
     

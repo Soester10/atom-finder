@@ -5,8 +5,8 @@ import sys
 clj_df = pd.read_csv("Clojure/all_atoms.csv")
 
 ##Naming convention map
-atoms_naming_map = {"postfix": "post-increment", 
-                    "prefix": "pre-increment",
+atoms_naming_map = {"postIncr": "post-increment", 
+                    "preIncr": "pre-increment",
                     "implicitPredicate": "implicit-predicate",
                     "assignmentAsValue": "assignment-as-value",
                     "conditionalOperator": "conditional"}
@@ -64,7 +64,7 @@ def check_diff(map1: set, map2: set, codeql_compiled_files: set):
 
 if __name__ == "__main__":
 
-    atom_name = "conditionalOperator"
+    atom_name = "preIncr"
 
     clj_atoms_map, codeql_atoms_map, codeql_compiled_files = process_results(atom_name)
     
