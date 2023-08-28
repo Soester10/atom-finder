@@ -25,7 +25,9 @@ if __name__ == "__main__":
     # combine_csv("implicitPredicate")
     # combine_csv("conditionalOperator")
     # combine_csv("postIncr")
-    combine_csv("preIncr")
+    # combine_csv("preIncr")
+    combine_csv("logicAsControlFlow")
+
 
 
     

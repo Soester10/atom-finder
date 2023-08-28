@@ -1,5 +1,6 @@
 import pandas as pd
 import sys
+import random
 
 ##Clojure parse all atoms
 clj_df = pd.read_csv("Clojure/all_atoms.csv")
@@ -9,17 +10,17 @@ atoms_naming_map = {"postIncr": "post-increment",
                     "preIncr": "pre-increment",
                     "implicitPredicate": "implicit-predicate",
                     "assignmentAsValue": "assignment-as-value",
-                    "conditionalOperator": "conditional"}
+                    "conditionalOperator": "conditional",
+                    "reversedSubscripts": "reversed-subscript",
+                    "logicAsControlFlow": "logic-as-control-flow"}
 
-##tests to get all atoms name in clj codebase
-# print(clj_df["type"].unique())
+# #tests to get all atoms name in clj codebase
+# print(clj_df["atom"].unique())
 # sys.exit(0)
 
 project = "git"
 
-
-def process_results(atom_name: str):
-    ##Clojure
+def process_clojure_results(atom_name: str):
     clj_atoms = clj_df.loc[clj_df['atom'] == f":{atoms_naming_map[atom_name]}", ['file', 'line']]
 
     clj_atoms = clj_atoms.loc[clj_atoms['file'].str.startswith(f'{project}/', na=False)]
@@ -30,8 +31,16 @@ def process_results(atom_name: str):
 
     # clj_postfix_git_map = {'git/compat/mingw.c : 903', 'git/compat/inet_pton.c : 125', ... }
 
+    return clj_atoms_map
 
-    ##CodeQL
+
+#to analyze the AST with few examples
+# clj_atoms_map = process_clojure_results(atom_name = "logicAsControlFlow")
+# print(len(list(clj_atoms_map)))
+# sys.exit(0)
+
+
+def process_codeql_results(atom_name: str):
     codeql_df = pd.read_csv(f"CodeQL/out/{atom_name}_{project}.csv", header=None)
 
     ## col4 => file; col5 => line
@@ -41,13 +50,30 @@ def process_results(atom_name: str):
     codeql_atoms_map = codeql_df[4].astype(str) + " : " + codeql_df[5].astype(str)
     codeql_atoms_map = set(codeql_atoms_map)
 
+    return codeql_atoms_map
+
+
+def get_codeql_all_compiled_files():
+    codeql_compiled_files_df = pd.read_csv("CodeQL/out/compiled_files_git.csv")
+    codeql_compiled_files = set(codeql_compiled_files_df["file"])
+
+    return codeql_compiled_files
+
+
+
+def process_results(atom_name: str):
+    ##Clojure
+    clj_atoms_map = process_clojure_results(atom_name)
+
+    ##CodeQL
+    codeql_atoms_map = process_codeql_results(atom_name)
+
     ##tests
     # print(codeql_postfix_git_map)
     # sys.exit(0)
 
     ##CodeQL all compiled files
-    codeql_compiled_files_df = pd.read_csv("CodeQL/out/compiled_files_git.csv")
-    codeql_compiled_files = set(codeql_compiled_files_df["file"])
+    codeql_compiled_files = get_codeql_all_compiled_files()
 
     return clj_atoms_map, codeql_atoms_map, codeql_compiled_files
 
@@ -64,7 +90,7 @@ def check_diff(map1: set, map2: set, codeql_compiled_files: set):
 
 if __name__ == "__main__":
 
-    atom_name = "preIncr"
+    atom_name = "logicAsControlFlow"
 
     clj_atoms_map, codeql_atoms_map, codeql_compiled_files = process_results(atom_name)
     
