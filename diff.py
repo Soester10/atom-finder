@@ -12,7 +12,8 @@ atoms_naming_map = {"postIncr": "post-increment",
                     "assignmentAsValue": "assignment-as-value",
                     "conditionalOperator": "conditional",
                     "reversedSubscripts": "reversed-subscript",
-                    "logicAsControlFlow": "logic-as-control-flow"}
+                    "logicAsControlFlow": "logic-as-control-flow",
+                    "operatorPrecedence": "operator-precedence"}
 
 # #tests to get all atoms name in clj codebase
 # print(clj_df["atom"].unique())
@@ -34,9 +35,10 @@ def process_clojure_results(atom_name: str):
     return clj_atoms_map
 
 
-#to analyze the AST with few examples
-# clj_atoms_map = process_clojure_results(atom_name = "logicAsControlFlow")
+## to analyze the AST with few examples
+# clj_atoms_map = process_clojure_results(atom_name = "operatorPrecedence")
 # print(len(list(clj_atoms_map)))
+# print(random.sample(list(clj_atoms_map), 10))
 # sys.exit(0)
 
 
@@ -90,7 +92,7 @@ def check_diff(map1: set, map2: set, codeql_compiled_files: set):
 
 if __name__ == "__main__":
 
-    atom_name = "logicAsControlFlow"
+    atom_name = "operatorPrecedence"
 
     clj_atoms_map, codeql_atoms_map, codeql_compiled_files = process_results(atom_name)
     
