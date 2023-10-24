@@ -5,6 +5,10 @@ import random
 ##Clojure parse all atoms
 clj_df = pd.read_csv("Clojure/all_atoms.csv")
 
+
+##TODO: del later
+# clj_df = pd.read_csv("Clojure/out_git4.csv")
+
 ##Naming convention map
 atoms_naming_map = {"postIncr": "post-increment", 
                     "preIncr": "pre-increment",
@@ -19,15 +23,20 @@ atoms_naming_map = {"postIncr": "post-increment",
 # print(clj_df["atom"].unique())
 # sys.exit(0)
 
-project = "git"
-
 def process_clojure_results(atom_name: str):
     clj_atoms = clj_df.loc[clj_df['atom'] == f":{atoms_naming_map[atom_name]}", ['file', 'line']]
 
     clj_atoms = clj_atoms.loc[clj_atoms['file'].str.startswith(f'{project}/', na=False)]
+   
+   
+    ##TODO: del later
+    # clj_atoms = clj_df.loc[clj_df['atom'] == f"{atoms_naming_map[atom_name]}", ['file', 'line']]
+    # clj_atoms['file'] = clj_atoms['file'].str.split("git_notLatest.nosync/").str[-1]
+
+
 
     # clj_atoms = clj_atoms.set_index('file').to_dict()['line']
-    clj_atoms_map = clj_atoms['file'].astype(str) + " : " + clj_atoms['line'].astype('str')
+    clj_atoms_map = clj_atoms['file'].astype(str) + " : " + clj_atoms['line'].astype(str)
     clj_atoms_map = set(clj_atoms_map)
 
     # clj_postfix_git_map = {'git/compat/mingw.c : 903', 'git/compat/inet_pton.c : 125', ... }
@@ -92,6 +101,8 @@ def check_diff(map1: set, map2: set, codeql_compiled_files: set):
 
 if __name__ == "__main__":
 
+    project = "git"
+
     atom_name = "operatorPrecedence"
 
     clj_atoms_map, codeql_atoms_map, codeql_compiled_files = process_results(atom_name)
@@ -107,9 +118,9 @@ if __name__ == "__main__":
     diff_codeql_clj = check_diff(codeql_atoms_map, clj_atoms_map, codeql_compiled_files)
     print("Lines in CodeQL that is not present in Clojure:", len(diff_codeql_clj))
 
-    print(diff_clj_codeql)
-    print()
-    # print(diff_codeql_clj)
+    print(sorted(diff_clj_codeql))
+    # print()
+    # print(sorted(diff_codeql_clj))
 
     # print(clj_atoms_map)
     # print()
