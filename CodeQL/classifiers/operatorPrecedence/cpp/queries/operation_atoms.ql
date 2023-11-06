@@ -37,7 +37,7 @@ predicate instancy(Operation e) {
 
  predicate checkSensitiveCombinations(Operation e) {
   // [:pointer :de_incr]
-  (checkPointerIncr(e, e.getAnOperand())) or
+  ((checkPointerIncr(e, e.getAnOperand())) or (checkPointerFieldIncr(e))) or
   // (checkPointer(e) and e.getAnOperand() instanceof CrementOperation) or
   //  [:arith_unary :add] [:arith_unary :multiply] [:arith_unary :and] [:arith_unary :or] [:arith_unary :cond] [:arith_unary :non-asso] [:arith_unary :bitwise_bin]
   (checkArithBin1(e) or checkArithBin2(e)) or
@@ -186,8 +186,17 @@ predicate instancy(Operation e) {
 
 
  predicate checkNotBin1(BinaryOperation e) {
-  binaryCheck(e) and e.getLeftOperand() instanceof UnaryLogicalOperation and instancyOperand2(e.getLeftOperand())
+  (binaryCheck(e) and e.getLeftOperand() instanceof UnaryLogicalOperation and instancyOperand2(e.getLeftOperand()))
+  or
+  (binaryCheck(e) and checkNotBin1helper1(e.getLeftOperand()) and instancyOperand2(e.getLeftOperand()))
   // checkLogicUnaryInsesCompanion(e) and instancyOperand2(a)
+ }
+
+
+
+
+ predicate checkNotBin1helper1(BinaryOperation e) {
+  e.getRightOperand() instanceof UnaryLogicalOperation
  }
 
 
@@ -221,6 +230,13 @@ predicate instancy(Operation e) {
 
  predicate checkPointerIncr(Operation e, CrementOperation a) {
   checkPointer(e) and instancyOperand2(a)
+ }
+
+
+
+
+ predicate checkPointerFieldIncr(CrementOperation e) {
+    e.getAnOperand() instanceof PointerFieldAccess
  }
 
 
@@ -327,7 +343,7 @@ predicate checkBitBinary(BinaryBitwiseOperation e) {
 
  predicate checkPointer(UnaryOperation e) {
   e instanceof AddressOfExpr or
-  e instanceof PointerDereferenceExpr  
+  e instanceof PointerDereferenceExpr
  }
 
 
@@ -368,8 +384,14 @@ predicate binaryCheck2(BinaryOperation e) {
   e instanceof BinaryBitwiseOperation or
   e instanceof BinaryLogicalOperation)
   and 
-  ((binaryCheckOperand(e.getLeftOperand()) and checkAddSub2(e, e.getLeftOperand()) and checkSameOperand2(e, e.getLeftOperand())) or
-  (binaryCheckOperand(e.getRightOperand()) and checkAddSub2(e, e.getRightOperand()) and checkSameOperand2(e, e.getRightOperand())))
+  // ((binaryCheckOperand(e.getLeftOperand()) and checkAddSub2(e, e.getLeftOperand()) and checkSameOperand2(e, e.getLeftOperand())) or
+  // (binaryCheckOperand(e.getRightOperand()) and checkAddSub2(e, e.getRightOperand()) and checkSameOperand2(e, e.getRightOperand())))
+  ((binaryCheckOperand(e.getLeftOperand()) and checkSameOperand2(e, e.getLeftOperand()) and checkAddSubLeft(e, e.getLeftOperand())) or
+  (binaryCheckOperand(e.getRightOperand()) and checkSameOperand2(e, e.getRightOperand()) and checkAddSubRight(e, e.getRightOperand())))
+
+  // //Check Later
+  // (((binaryCheckOperand(e.getLeftOperand()) and checkSameOperand2(e, e.getLeftOperand())) or (binaryCheckOperandLeftHelper1(e, e.getLeftOperand()))) or
+  // ((binaryCheckOperand(e.getRightOperand()) and checkSameOperand2(e, e.getRightOperand())) or (binaryCheckOperandRightHelper1(e, e.getRightOperand()))))
 }
 
 
@@ -380,22 +402,59 @@ predicate checkSameOperand2(BinaryOperation e, BinaryOperation a) {
   // (e instanceof DivExpr and a instanceof RemExpr) or
   (e instanceof RemExpr and a instanceof RemExpr) or
   // (e instanceof RemExpr and a instanceof DivExpr) or
+  (e instanceof SubExpr and a instanceof SubExpr) or
   not(a.toString() = e.toString())
 }
 
 
 
 predicate checkAddSub2(BinaryOperation e, BinaryOperation a) {
-  not((e instanceof AddExpr and a instanceof SubExpr or (e instanceof SubExpr and a instanceof AddExpr)))  
+  not((e instanceof AddExpr and a instanceof SubExpr) or (e instanceof SubExpr and a instanceof AddExpr))  
+}
+
+
+
+predicate checkAddSubLeft(BinaryOperation e, BinaryOperation a) {
+  not(e instanceof SubExpr and a instanceof AddExpr)
+}
+
+
+predicate checkAddSubRight(BinaryOperation e, BinaryOperation a) {
+  not(e instanceof AddExpr and a instanceof SubExpr)
 }
 
 
 
 predicate binaryCheckOperand(BinaryOperation e) {
+  // ((left=true and ((e.getRightOperand() instanceof VariableAccess or e.getRightOperand() instanceof Literal) or binaryCheckOperand(e.getRightOperand(), left))) or
+  // (left=false and ((e.getLeftOperand() instanceof VariableAccess or e.getLeftOperand() instanceof Literal) or binaryCheckOperand(e.getLeftOperand(), left)))) and
  (e instanceof BinaryArithmeticOperation or
   e instanceof BinaryBitwiseOperation or
   e instanceof BinaryLogicalOperation) and
   instancyOperand2(e)
+}
+
+
+
+
+predicate binaryCheckOperandLeftHelper1(BinaryOperation e, BinaryOperation a) {
+  (a.getRightOperand() instanceof BinaryArithmeticOperation or
+   a.getRightOperand() instanceof BinaryBitwiseOperation or
+   a.getRightOperand() instanceof BinaryLogicalOperation) and
+   instancyOperand2(a.getRightOperand())
+   and
+   checkSameOperand2(e, a.getRightOperand())
+}
+
+
+
+predicate binaryCheckOperandRightHelper1(BinaryOperation e, BinaryOperation a) {
+  (a.getLeftOperand() instanceof BinaryArithmeticOperation or
+   a.getLeftOperand() instanceof BinaryBitwiseOperation or
+   a.getLeftOperand() instanceof BinaryLogicalOperation) and
+   instancyOperand2(a.getLeftOperand())
+   and
+   checkSameOperand2(e, a.getLeftOperand())
 }
 
 

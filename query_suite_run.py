@@ -26,7 +26,8 @@ if __name__ == "__main__":
     # combine_csv("conditionalOperator")
     # combine_csv("postIncr")
     # combine_csv("preIncr")
-    combine_csv("logicAsControlFlow")
+    # combine_csv("logicAsControlFlow")
+    combine_csv("commaOperator")
 
 
 

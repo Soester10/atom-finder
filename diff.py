@@ -17,7 +17,11 @@ atoms_naming_map = {"postIncr": "post-increment",
                     "conditionalOperator": "conditional",
                     "reversedSubscripts": "reversed-subscript",
                     "logicAsControlFlow": "logic-as-control-flow",
-                    "operatorPrecedence": "operator-precedence"}
+                    "operatorPrecedence": "operator-precedence",
+                    "macroOperatorPrecedence": "macro-operator-precedence",
+                    "preprocessorInStatement": "preprocessor-in-statement", ##TODO
+                    "commaOperator": "comma-operator",
+                    }
 
 # #tests to get all atoms name in clj codebase
 # print(clj_df["atom"].unique())
@@ -45,7 +49,8 @@ def process_clojure_results(atom_name: str):
 
 
 ## to analyze the AST with few examples
-# clj_atoms_map = process_clojure_results(atom_name = "operatorPrecedence")
+# project="git"
+# clj_atoms_map = process_clojure_results(atom_name = "commaOperator")
 # print(len(list(clj_atoms_map)))
 # print(random.sample(list(clj_atoms_map), 10))
 # sys.exit(0)
@@ -103,7 +108,7 @@ if __name__ == "__main__":
 
     project = "git"
 
-    atom_name = "operatorPrecedence"
+    atom_name = "commaOperator"
 
     clj_atoms_map, codeql_atoms_map, codeql_compiled_files = process_results(atom_name)
     
