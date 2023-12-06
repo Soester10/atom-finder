@@ -17,10 +17,12 @@ atoms_naming_map = {"postIncr": "post-increment",
                     "conditionalOperator": "conditional",
                     "reversedSubscripts": "reversed-subscript",
                     "logicAsControlFlow": "logic-as-control-flow",
-                    "operatorPrecedence": "operator-precedence",
-                    "macroOperatorPrecedence": "macro-operator-precedence",
+                    "operatorPrecedence": "operator-precedence", ##TODO
+                    "macroOperatorPrecedence": "macro-operator-precedence", ##TODO
                     "preprocessorInStatement": "preprocessor-in-statement", ##TODO
                     "commaOperator": "comma-operator",
+                    "typeConversion" : "type-conversion",
+                    "repurposedVariable": "repurposed-variable"
                     }
 
 # #tests to get all atoms name in clj codebase
@@ -48,12 +50,12 @@ def process_clojure_results(atom_name: str):
     return clj_atoms_map
 
 
-## to analyze the AST with few examples
-# project="git"
-# clj_atoms_map = process_clojure_results(atom_name = "commaOperator")
-# print(len(list(clj_atoms_map)))
-# print(random.sample(list(clj_atoms_map), 10))
-# sys.exit(0)
+# to analyze the AST with few examples
+project="git"
+clj_atoms_map = process_clojure_results(atom_name = "repurposedVariable")
+print(len(list(clj_atoms_map)))
+print(random.sample(list(clj_atoms_map), 10))
+sys.exit(0)
 
 
 def process_codeql_results(atom_name: str):
