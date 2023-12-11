@@ -50,12 +50,12 @@ def process_clojure_results(atom_name: str):
     return clj_atoms_map
 
 
-# to analyze the AST with few examples
-project="git"
-clj_atoms_map = process_clojure_results(atom_name = "repurposedVariable")
-print(len(list(clj_atoms_map)))
-print(random.sample(list(clj_atoms_map), 10))
-sys.exit(0)
+# # to analyze the AST with few examples
+# project="git"
+# clj_atoms_map = process_clojure_results(atom_name = "repurposedVariable")
+# print(len(list(clj_atoms_map)))
+# print(random.sample(list(clj_atoms_map), 10))
+# sys.exit(0)
 
 
 def process_codeql_results(atom_name: str):
@@ -110,7 +110,7 @@ if __name__ == "__main__":
 
     project = "git"
 
-    atom_name = "commaOperator"
+    atom_name = "repurposedVariable"
 
     clj_atoms_map, codeql_atoms_map, codeql_compiled_files = process_results(atom_name)
     
