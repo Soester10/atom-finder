@@ -15,14 +15,15 @@ atoms_naming_map = {"postIncr": "post-increment",
                     "implicitPredicate": "implicit-predicate",
                     "assignmentAsValue": "assignment-as-value",
                     "conditionalOperator": "conditional",
-                    "reversedSubscripts": "reversed-subscript",
+                    "reversedSubscripts": "reversed-subscript", ##TODO
                     "logicAsControlFlow": "logic-as-control-flow",
                     "operatorPrecedence": "operator-precedence", ##TODO
                     "macroOperatorPrecedence": "macro-operator-precedence", ##TODO
                     "preprocessorInStatement": "preprocessor-in-statement", ##TODO
                     "commaOperator": "comma-operator",
-                    "typeConversion" : "type-conversion",
-                    "repurposedVariable": "repurposed-variable"
+                    "typeConversion" : "type-conversion", ##TODO
+                    "repurposedVariable": "repurposed-variable", ##TODO
+                    "literalEncoding": "literal-encoding", #TODO
                     }
 
 # #tests to get all atoms name in clj codebase
@@ -50,9 +51,9 @@ def process_clojure_results(atom_name: str):
     return clj_atoms_map
 
 
-# # to analyze the AST with few examples
+# #to analyze the AST with few examples
 # project="git"
-# clj_atoms_map = process_clojure_results(atom_name = "repurposedVariable")
+# clj_atoms_map = process_clojure_results(atom_name = "preprocessorInStatement")
 # print(len(list(clj_atoms_map)))
 # print(random.sample(list(clj_atoms_map), 10))
 # sys.exit(0)
@@ -110,7 +111,7 @@ if __name__ == "__main__":
 
     project = "git"
 
-    atom_name = "repurposedVariable"
+    atom_name = "preIncr"
 
     clj_atoms_map, codeql_atoms_map, codeql_compiled_files = process_results(atom_name)
     
@@ -124,8 +125,11 @@ if __name__ == "__main__":
     ##check for lines in codeql that is not present in clojure
     diff_codeql_clj = check_diff(codeql_atoms_map, clj_atoms_map, codeql_compiled_files)
     print("Lines in CodeQL that is not present in Clojure:", len(diff_codeql_clj))
-
+    
+    # print("\n Lines in Clojure that is not present in CodeQL")
     print(sorted(diff_clj_codeql))
+    # print("\n Lines in CodeQL that is not present in Clojure")
+    # print(sorted(diff_codeql_clj))
     # print()
     # print(sorted(diff_codeql_clj))
 

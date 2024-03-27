@@ -5,34 +5,39 @@
  * @id python/example/empty-scope
  */
 
- import cpp
+import cpp
 
+predicate checkVariableAccess(VariableAccess e) { not e instanceof FieldAccess }
 
- 
- predicate checkVariableAccess(VariableAccess e){
-   not(e instanceof FieldAccess)
- }
-
-
-
- predicate checkAssignExpr(Assignment e) {
-  checkVariableAccess(e.getLValue()) and e.getLValue().toString() = checkControlFlow(e.getControlFlowScope())
+predicate checkAssignExpr(Assignment e) {
+  checkVariableAccess(e.getLValue()) and
+  e.getLValue().toString() = checkControlFlow(e.getControlFlowScope()) and
+  not prevOccurenceExists(e.getControlFlowScope(), e.getLValue().toString(), e.getLocation())
+  // checkFirstVariableAccess(e.getLValue().getEnclosingVariable(), e.getControlFlowScope())
 }
 
-
-
-predicate checkCremation(CrementOperation e) {
-  e.getOperand().toString() = checkControlFlow(e.getControlFlowScope())
+predicate checkCrementation(CrementOperation e) {
+  e.getOperand().toString() = checkControlFlow(e.getControlFlowScope()) and
+  not prevOccurenceExists(e.getControlFlowScope(), e.getOperand().toString(), e.getLocation())
+  // checkFirstVariableAccess(e.getEnclosingVariable(), e.getControlFlowScope())
 }
 
-
-
-string checkControlFlow(TopLevelFunction e) {
-  result = e.getAParameter().toString() 
+predicate prevOccurenceExists(TopLevelFunction e, string s, Location l) {
+  checkforAssignment(e.getEntryPoint().getAChild(), s, l)
 }
 
+predicate checkforAssignment(ExprStmt e, string s, Location l) {
+  checkAssignExpr(e.getExpr(), s, l)
+}
 
+predicate checkAssignExpr(AssignExpr e, string s, Location l) {
+  not e.getLValue() instanceof PointerFieldAccess and
+  e.getLValue().toString() = s and
+  e.getLocation().isBefore(l)
+}
 
- from Operation e
- where checkAssignExpr(e) or checkCremation(e)
- select e, "This is a Repurposed Variable atom"
+string checkControlFlow(TopLevelFunction e) { result = e.getAParameter().toString() }
+
+from Operation e
+where checkAssignExpr(e) //or checkCrementation(e)
+select e, "This is a Repurposed Variable atom"
