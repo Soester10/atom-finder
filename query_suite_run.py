@@ -22,13 +22,15 @@ def combine_csv(atom_name: str):
 
 if __name__ == "__main__":
     # combine_csv("assignmentAsValue")
-    combine_csv("implicitPredicate")
+    # combine_csv("implicitPredicate")
     # combine_csv("conditionalOperator")
     # combine_csv("postIncr")
     # combine_csv("preIncr")
     # combine_csv("logicAsControlFlow")
     # combine_csv("commaOperator")
     # combine_csv("repurposedVariable")
+    # combine_csv("preprocessorInStatement")
+    combine_csv("repurposedVariable")
     
 
 

@@ -19,7 +19,7 @@ atoms_naming_map = {"postIncr": "post-increment",
                     "logicAsControlFlow": "logic-as-control-flow",
                     "operatorPrecedence": "operator-precedence", ##TODO
                     "macroOperatorPrecedence": "macro-operator-precedence", ##TODO
-                    "preprocessorInStatement": "preprocessor-in-statement", ##TODO
+                    "preprocessorInStatement": "preprocessor-in-statement",
                     "commaOperator": "comma-operator",
                     "typeConversion" : "type-conversion", ##TODO
                     "repurposedVariable": "repurposed-variable", ##TODO
@@ -111,7 +111,7 @@ if __name__ == "__main__":
 
     project = "git"
 
-    atom_name = "preIncr"
+    atom_name = "repurposedVariable"
 
     clj_atoms_map, codeql_atoms_map, codeql_compiled_files = process_results(atom_name)
     
@@ -126,10 +126,10 @@ if __name__ == "__main__":
     diff_codeql_clj = check_diff(codeql_atoms_map, clj_atoms_map, codeql_compiled_files)
     print("Lines in CodeQL that is not present in Clojure:", len(diff_codeql_clj))
     
-    # print("\n Lines in Clojure that is not present in CodeQL")
-    print(sorted(diff_clj_codeql))
-    # print("\n Lines in CodeQL that is not present in Clojure")
-    # print(sorted(diff_codeql_clj))
+    print("\n Lines in Clojure that is not present in CodeQL")
+    print(random.sample(sorted(diff_clj_codeql), min(30, len(diff_clj_codeql))))
+    print("\n Lines in CodeQL that is not present in Clojure")
+    print(random.sample(sorted(diff_codeql_clj), min(30, len(diff_codeql_clj))))
     # print()
     # print(sorted(diff_codeql_clj))
 

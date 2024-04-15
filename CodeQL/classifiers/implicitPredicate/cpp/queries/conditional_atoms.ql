@@ -10,8 +10,9 @@
  predicate instancy(Expr e) {
     // e instanceof VariableAccess
     // e instanceof FunctionCall
-     (not(e instanceof BinaryOperation) or testy(e)) and
-     (not(e instanceof UnaryOperation) or testy_unary(e))
+    not inMacroExpansion(e) and
+     ((not(e instanceof BinaryOperation) or testy(e)) and
+     (not(e instanceof UnaryOperation) or testy_unary(e)))
  }
  
  

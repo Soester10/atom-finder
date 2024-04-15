@@ -7,16 +7,22 @@
 
  import cpp
 
- predicate instancy(Expr e) {
+ predicate instancy(BinaryLogicalOperation e) {
     // e instanceof VariableAccess
     // e instanceof FunctionCall
     not(inMacroExpansion(e)) 
     and
-     ((e instanceof BinaryOperation and testy(e)) or
+
+     (((e.getLeftOperand() instanceof FunctionCall) or 
+     (e.getRightOperand() instanceof FunctionCall))
+
+     or 
+
+     ((testy(e.getLeftOperand()) or testy(e.getRightOperand())) or
    //   (e instanceof ComparisonOperation and testy_comp(e)) or
-     (e instanceof UnaryOperation and testy_unary(e)) or
-     (e instanceof AssignExpr or e instanceof AssignOperation) or
-     e instanceof FunctionCall)
+     (testy_unary(e.getLeftOperand()) or testy_unary(e.getRightOperand()))))
+   //   or
+   //   (e instanceof AssignExpr or e instanceof AssignOperation)))
  }
 
 
@@ -47,5 +53,5 @@
  
  
  from BinaryLogicalOperation e
- where (instancy(e.getLeftOperand())) or (instancy(e.getRightOperand()))
+ where (instancy(e))
  select e, "This is a Logic as Control Flow atom"

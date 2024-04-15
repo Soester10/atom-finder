@@ -8,5 +8,9 @@
 import cpp
 
 from PrefixCrementOperation e
-where not(e instanceof ExprInVoidContext) or e.getParent() instanceof WhileStmt
+where
+  not inMacroExpansion(e) and
+  ((not e instanceof ExprInVoidContext) or 
+    // e.getControlFlowScope() instanceof WhileStmt)
+    e.getParent() instanceof WhileStmt)
 select e, "This is a Prefix atom"

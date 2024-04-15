@@ -29,7 +29,7 @@ predicate isMacroinFunction(TopLevelFunction f) {
 
 from TopLevelFunction f
 where isMacroinFunction(f)
-select f, "This is a Preprocessor In Statement atom"
+select f.getEntryPoint(), "This is a Preprocessor In Statement atom"
 // //macro test
 // from Macro e
 // select e, e.getLocation().getStartLine(), "This is Macro"
